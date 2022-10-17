@@ -85,7 +85,7 @@ def clean_and_lesson_name(issue_tracker, lesson_name):
 
 def create_csv(issue_tracker, nd):
     '''
-    Creates a csv called 'course_issue_tracker.csv' from a dictionary 'issue_tracker'
+    Creates a csv called 'issue_tracker.csv' from a dictionary 'issue_tracker'
 
     INPUT - comprehensive dictionary of all issues for the JSONs in the folder.
 
@@ -96,7 +96,7 @@ def create_csv(issue_tracker, nd):
          - URL - goes to Mocha
          - Issue - contain 1 issue in a given row
     '''
-    with open('course_issue_tracker.csv', 'w') as csv_file:
+    with open('issue_tracker.csv', 'w') as csv_file:
         headers = ['Course Key', 'Lesson Name', 'Page Name', 'Issue'] # Labels
         writer = csv.DictWriter(csv_file, fieldnames = headers)
         writer.writeheader()

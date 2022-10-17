@@ -1,3 +1,4 @@
-/jsons
+/jsons/*
 test.txt
 course_issue_tracker.csv
+issue_tracker.csv
