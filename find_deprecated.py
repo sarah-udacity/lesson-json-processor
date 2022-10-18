@@ -37,7 +37,7 @@ def deprecated_atom_check(it, item_key, core):
     elif core['question']['semantic_type'] == "QuestionInterface":
         it[item_key].append("Question Interface")
     elif core['question']['semantic_type'] == "IFrameQuestion":
-        it[item_key].append("IFrameQuestion")
+        it[item_key].append("IFrame Question")
 
 
 # Customize Your Checks
