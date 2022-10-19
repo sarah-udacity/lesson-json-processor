@@ -1,8 +1,20 @@
-import pandas as pd
-from glob import glob
 import os
 import json
 import csv
+import yaml
+
+def convert_yamls(): # iterate through each YAML file
+    for filename in os.listdir("yamls"):
+        if filename.endswith('.yaml'):
+            # open and load the YAML file
+            yaml_file =  open("yamls/" + filename)
+            loaded_yaml = yaml.safe_load(yaml_file)
+
+            # create/open a JSON file with the same name
+            json_file = open("jsons/" + os.path.splitext(filename)[0] + ".json", 'w')
+
+            # convert the YAML contents to JSON
+            json.dump(loaded_yaml, json_file)
 
 def create_issue_tracker_dict(data):
     '''
@@ -84,6 +96,9 @@ def create_csv(issue_tracker):
 
 def main():
     course_dict = {}
+
+    # convert YAML files to JSON
+    convert_yamls()
     for filename in os.listdir("jsons"):
 
         # iterates through each json file

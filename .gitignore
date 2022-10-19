@@ -1,4 +1,3 @@
-/jsons/*
 test.txt
 course_issue_tracker.csv
 issue_tracker.csv
@@ -9,4 +8,7 @@ issue_tracker.csv
 /nd891
 /nd027
 /nd089
+/nd0013
 .DS_Store
+*.yaml
+*.json
