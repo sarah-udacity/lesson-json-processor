@@ -1,11 +1,8 @@
-import re
 import pandas as pd
 from glob import glob
-import sys
 import os
 import json
 import csv
-import re
 
 def create_issue_tracker_dict(data):
     '''
