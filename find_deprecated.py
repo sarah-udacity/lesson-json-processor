@@ -38,19 +38,19 @@ def create_issue_tracker_dict(data):
 # Check for deprecated quizzes
 def deprecated_atom_check(it, item_key, core):
     if core['question']['semantic_type'] == "ProgrammingQuestion":
-          it[item_key].append("Programming Question")
+          it[item_key].extend(["Programming Question", core['question']['evaluation_id']])
     elif core['question']['semantic_type'] == "ImageFormQuestion":
-          it[item_key].append("Image Form Question")
+          it[item_key].extend(["Image Form Question", core['question']['evaluation_id']])
     elif core['question']['semantic_type'] == "CodeGradedQuestion":
-          it[item_key].append("Code Graded Question")
+          it[item_key].extend(["Code Graded Question", core['question']['evaluation_id']])
     elif core['question']['semantic_type'] == "QuestionInterface":
-        it[item_key].append("Question Interface")
+        it[item_key].extend(["Question Interface", core['question']['evaluation_id']])
     elif core['question']['semantic_type'] == "IFrameQuestion":
-        it[item_key].append("IFrame Question")
+        it[item_key].extend(["IFrame question", core['question']['evaluation_id']])
 
 
-# Customize Your Checks
-def initialize_checks(issue_tracker, cdkey, ver, lesson, data):
+# Intialize the check
+def initialize_checks(issue_tracker, data):
     '''Checks atom type and initiates check for deprecated quiz types.'''
     for concept_num in range(0, len(data['concepts'])): # Every Concept (N)
         item_key = data['concepts'][concept_num]['key']
@@ -85,13 +85,14 @@ def create_csv(issue_tracker):
          - Lesson Name
          - Page Name
          - Issue
+         - Quiz ID
     '''
     with open('issue_tracker.csv', 'w') as csv_file:
-        headers = ['Course Key', 'Lesson Name', 'Page Name', 'Issue'] # Labels
+        headers = ['Course Key', 'Lesson Name', 'Page Name', 'Issue', 'ID'] # Labels
         writer = csv.DictWriter(csv_file, fieldnames = headers)
         writer.writeheader()
         for key,value in issue_tracker.items():
-            writer.writerow({'Course Key': value[0], 'Lesson Name': value[1], 'Page Name': value[2], 'Issue': value[3]})
+            writer.writerow({'Course Key': value[0], 'Lesson Name': value[1], 'Page Name': value[2], 'Issue': value[3], 'ID': value[4]})
     print("Your course has been checked and your csv file is in the main directory.")
 
 def main():
@@ -113,7 +114,7 @@ def main():
 
             # creates, checks, and organizes them into 1 dictionary
             issue_tracker = create_issue_tracker_dict(data)
-            checked = initialize_checks(issue_tracker, cdkey, ver, lesson, data)
+            checked = initialize_checks(issue_tracker, data)
             lesson_dict = clean_and_lesson_name(checked, cdkey, data['title'])
             course_dict.update(lesson_dict)
             file.close()
