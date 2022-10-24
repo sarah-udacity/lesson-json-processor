@@ -16,7 +16,7 @@ This script identifies all deprecated quiz types in YAML and/or JSON lesson file
 
 This script identifies all matching quizzes in YAML and/or JSON lesson files downloaded from Mocha and outputs the findings to a CSV file.
 
-## Output
+### Output
 
 -   Course Key
 -   Lesson Name
