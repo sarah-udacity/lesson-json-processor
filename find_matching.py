@@ -35,31 +35,16 @@ def create_issue_tracker_dict(data):
             count += 1 # increment the count to go to next page
     return issue_tracker
 
-# Check for deprecated quizzes
-def deprecated_atom_check(it, item_key, core):
-    if core['question']['semantic_type'] == "ProgrammingQuestion":
-          it[item_key].extend(["Programming Question", core['question']['evaluation_id']])
-    elif core['question']['semantic_type'] == "ImageFormQuestion":
-          it[item_key].extend(["Image Form Question", core['question']['evaluation_id']])
-    elif core['question']['semantic_type'] == "CodeGradedQuestion":
-          it[item_key].extend(["Code Graded Question", core['question']['evaluation_id']])
-    elif core['question']['semantic_type'] == "QuestionInterface":
-        it[item_key].extend(["Question Interface", core['question']['evaluation_id']])
-    elif core['question']['semantic_type'] == "IFrameQuestion":
-        it[item_key].extend(["IFrame question", core['question']['evaluation_id']])
-
-
 # Intialize the check
 def initialize_checks(issue_tracker, data):
-    '''Checks atom type and initiates check for deprecated quiz types.'''
+    '''Checks atom type and initiates check for matching quiz types.'''
     for concept_num in range(0, len(data['concepts'])): # Every Concept (N)
         item_key = data['concepts'][concept_num]['key']
         for atom_num in range(0, len(data['concepts'][concept_num]['atoms'])): # Every Atom (M)
             core = data['concepts'][concept_num]['atoms'][atom_num]
-            atom_type = core['__typename']
-
-            if "QuizAtom" == atom_type:
-                deprecated_atom_check(issue_tracker, item_key, core)
+            atom_type = core['semantic_type']
+            if  atom_type ==  "MatchingQuizAtom":
+               issue_tracker[item_key].append("Matching Quiz")
     return issue_tracker
 
 # Create the CSV
@@ -85,14 +70,13 @@ def create_csv(issue_tracker):
          - Lesson Name
          - Page Name
          - Issue
-         - Quiz ID
     '''
     with open('issue_tracker.csv', 'w') as csv_file:
-        headers = ['Course Key', 'Lesson Name', 'Page Name', 'Issue', 'ID'] # Labels
+        headers = ['Course Key', 'Lesson Name', 'Page Name', 'Issue'] # Labels
         writer = csv.DictWriter(csv_file, fieldnames = headers)
         writer.writeheader()
         for key,value in issue_tracker.items():
-            writer.writerow({'Course Key': value[0], 'Lesson Name': value[1], 'Page Name': value[2], 'Issue': value[3], 'ID': value[4]})
+            writer.writerow({'Course Key': value[0], 'Lesson Name': value[1], 'Page Name': value[2], 'Issue': value[3]})
     print("Your course has been checked and your csv file is in the main directory.")
 
 def main():

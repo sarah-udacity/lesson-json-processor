@@ -1,6 +1,20 @@
 # Mocha Lesson JSON Processor
 
+## Identify Deprecated quizzes `find_deprecated.py`
+
 This script identifies all deprecated quiz types in YAML and/or JSON lesson files downloaded from Mocha and outputs the findings to a CSV file.
+
+### Output
+
+-   Course Key
+-   Lesson Name
+-   Page Name
+-   Issue
+-   Quiz ID
+
+## Identify Matching quizzes `find_matching.py`
+
+This script identifies all matching quizzes in YAML and/or JSON lesson files downloaded from Mocha and outputs the findings to a CSV file.
 
 ## Output
 
@@ -8,7 +22,6 @@ This script identifies all deprecated quiz types in YAML and/or JSON lesson file
 -   Lesson Name
 -   Page Name
 -   Issue
--   Quiz ID
 
 ## Instructions
 
@@ -18,7 +31,13 @@ This script identifies all deprecated quiz types in YAML and/or JSON lesson file
 4. Run the python code:
 
     ```py
-    find_workspaces.py
+    find_deprecated.py
+    ```
+
+    OR
+
+    ```py
+    find_matching.py
     ```
 
 5. Download `issue_tracker.csv`.
