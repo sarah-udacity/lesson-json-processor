@@ -113,7 +113,7 @@ def main():
             if 'concepts' in lesson_data:
                  # get cdkey key from filename and lesson name from json
                 cdkey = filename.split('_')[0]
-                lesson_title = ['title']
+                lesson_title = lesson_data['title']
 
                 # create issue tracker for lesson
                 lesson_issue_tracker = create_issue_tracker_dict(lesson_data)
