@@ -3,7 +3,8 @@ import json
 import csv
 import yaml
 
-def convert_yamls(): # iterate through each YAML file
+def convert_yamls():
+    ''' Iterate through YAML files and return a JSON file with the same data'''
     for filename in os.listdir("yamls"):
         if filename.endswith('.yaml'):
             # open and load the YAML file
@@ -28,6 +29,7 @@ def create_issue_tracker_dict(data):
     '''
     issue_tracker = {}
     count = 0
+
     for pages in data['concepts']:
         if count < len(data['concepts']):
             item_key = pages['key'] # pages/concept key
@@ -50,8 +52,8 @@ def deprecated_atom_check(it, item_key, core):
 
 
 # Intialize the check
-def initialize_checks(issue_tracker, data):
-    '''Checks atom type and initiates check for deprecated quiz types.'''
+def find_deprecated(issue_tracker, data):
+    '''Check atom type and search for deprecated quiz types.'''
     for concept_num in range(0, len(data['concepts'])): # Every Concept (N)
         item_key = data['concepts'][concept_num]['key']
         for atom_num in range(0, len(data['concepts'][concept_num]['atoms'])): # Every Atom (M)
@@ -63,8 +65,8 @@ def initialize_checks(issue_tracker, data):
     return issue_tracker
 
 # Create the CSV
-def clean_and_lesson_name(issue_tracker, cdkey, lesson_name):
-    '''This will clean the dictionary to include only pages with issues and if there are issues will add the lesson title'''
+def clean_lesson_tracker(issue_tracker, cdkey, lesson_name):
+    '''Clean the dictionary to include only pages with issues and add the lesson title'''
     for key in list(issue_tracker):
         if len(issue_tracker[key]) == 1:
             del issue_tracker[key]
@@ -75,7 +77,7 @@ def clean_and_lesson_name(issue_tracker, cdkey, lesson_name):
 
 def create_csv(issue_tracker):
     '''
-    Creates a csv called 'issue_tracker.csv' from a dictionary 'issue_tracker'
+    Create a csv called 'issue_tracker.csv' from a dictionary 'issue_tracker'
 
     INPUT - comprehensive dictionary of all issues for the JSONs in the folder.
 
@@ -105,19 +107,26 @@ def main():
         # iterates through each json file
         if filename.endswith('.json'):
             file =  open("jsons/" + filename)
-            data = json.load(file)
+            lesson_data = json.load(file)
 
-            # initialize static lesson values
-            lesson = data['key'] #lesson key
-            cdkey = filename.split('_')[0] # cdkey key from filename
-            ver = filename.split('_')[2] # version from filename (this can't be found when exporting json from mocha/coco)
+            # check if json has a concepts key
+            if 'concepts' in lesson_data:
+                 # get cdkey key from filename and lesson name from json
+                cdkey = filename.split('_')[0]
+                lesson_title = ['title']
 
-            # creates, checks, and organizes them into 1 dictionary
-            issue_tracker = create_issue_tracker_dict(data)
-            checked = initialize_checks(issue_tracker, data)
-            lesson_dict = clean_and_lesson_name(checked, cdkey, data['title'])
-            course_dict.update(lesson_dict)
-            file.close()
+                # create issue tracker for lesson
+                lesson_issue_tracker = create_issue_tracker_dict(lesson_data)
+
+                # check lesson json and return any deprecated quizzes
+                found_issues = find_deprecated(lesson_issue_tracker, lesson_data)
+
+                # clean up the found issues
+                lesson_dict = clean_lesson_tracker(found_issues, cdkey, lesson_title)
+
+                # add the cleaned issues to the course tracker and close the json file
+                course_dict.update(lesson_dict)
+                file.close()
 
     # uses the dictionary to create a csv
     create_csv(course_dict)
