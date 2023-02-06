@@ -31,13 +31,13 @@ This script identifies all matching quizzes in YAML and/or JSON lesson files dow
 4. Run the python code:
 
     ```py
-    find_deprecated.py
+    python3 find_deprecated.py
     ```
 
     OR
 
     ```py
-    find_matching.py
+    python3 find_matching.py
     ```
 
 5. Download `issue_tracker.csv`.
