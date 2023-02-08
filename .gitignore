@@ -12,3 +12,7 @@ issue_tracker.csv
 .DS_Store
 *.yaml
 *.json
+*.zip
+*.srt
+.DS_Store
+results.csv

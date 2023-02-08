@@ -25,7 +25,7 @@ This script identifies all matching quizzes in YAML and/or JSON lesson files dow
 
 ## Instructions
 
-1. Download lesson JSONs and/or JSONs from Mocha
+1. Download lesson JSON and/or YAML files from Mocha
 2. Save JSONS in the `/jsons` folder
 3. Save YAML files in the `/yamls` folder
 4. Run the python code:
@@ -41,3 +41,7 @@ This script identifies all matching quizzes in YAML and/or JSON lesson files dow
     ```
 
 5. Download `issue_tracker.csv`.
+6. [OPTIONAL] Delete the JSON and YAML files
+    ```py
+    python3 delete_files.py
+    ```
