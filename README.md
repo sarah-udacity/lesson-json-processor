@@ -37,8 +37,9 @@ This script identifies all the YouTube IDs for videos in JSON lesson files downl
 ## Instructions
 
 1. Download lesson JSON and/or YAML files from Mocha
-2. Save JSONS in the `/jsons` folder
-3. Run the python code:
+2. Save JSONs in the `/jsons` folder
+3. Save YAMLs in the `/yamls` folder
+4. Run the python code:
 
     ```py
     python3 find_deprecated.py
