@@ -58,10 +58,11 @@ def find_deprecated(issue_tracker, data):
         item_key = data['concepts'][concept_num]['key']
         for atom_num in range(0, len(data['concepts'][concept_num]['atoms'])): # Every Atom (M)
             core = data['concepts'][concept_num]['atoms'][atom_num]
-            atom_type = core['__typename']
+            if '__typename' in core and core['__typename'] is not None:
+                atom_type = core['__typename']
 
-            if "QuizAtom" == atom_type:
-                deprecated_atom_check(issue_tracker, item_key, core)
+                if "QuizAtom" == atom_type:
+                    deprecated_atom_check(issue_tracker, item_key, core)
     return issue_tracker
 
 # Create the CSV
